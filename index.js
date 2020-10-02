@@ -73,7 +73,7 @@ z=y(ele,z,coll)
      return newArr.sort(function(a, b) {
        return callback(a) - callback(b)
      })
-	}, 
+	},
 	 unpack: function(receiver, arr) {
      for (let val of arr)
        receiver.push(val)
