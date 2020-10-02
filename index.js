@@ -4,12 +4,33 @@ const fi = (function() {
       return 'Start by reading https://medium.com/javascript-scene/master-the-javascript-interview-what-is-functional-programming-7f218c68b3a0'
     },
 
-    each: function() {
-
+    each: function(a,b) {
+      if (Array.isArray(a)){
+        for (const ele of a){
+          b.call(this, ele)
+        }
+      }
+      else{
+        for (const prop in a){
+          b.call(this, a[prop])
+        }
+      }
+  return a;
     },
 
-    map: function() {
-
+    map: function(a,b) {
+      let result =[];
+      if (Array.isArray(a)){
+        for (const ele of a){
+          result.push(b.call(this, ele))
+        }
+      }
+      else {
+        for (const prop in a){
+          result.push(b.call(this, a[prop],prop))
+        }
+      }
+  return result;
     },
 
     reduce: function(x=[],y=()=>{},z) {
