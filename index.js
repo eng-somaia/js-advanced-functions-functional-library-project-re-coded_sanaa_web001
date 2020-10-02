@@ -41,7 +41,7 @@ coll=coll.slice(1);
 }
 for( const ele of coll)
 {
-z=y(ele,z,coll)
+z=y(z,ele,coll)
 }
  return z;
 
