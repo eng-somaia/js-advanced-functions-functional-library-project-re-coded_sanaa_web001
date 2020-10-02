@@ -34,7 +34,7 @@ const fi = (function() {
     },
 
     reduce: function(x=[],y=()=>{},z) {
-        coll = x;
+        let coll = x;
 if(!z){
 z=coll[0];
 coll=coll.slice(1);
@@ -83,7 +83,7 @@ z=y(ele,z,coll)
          if(n===0)
 	return col[col.length-1]
 	else
-	return col.slice(n, col.length-1)
+	return col.slice(col.length-n, col.length)
 	},
 	compact: function(col){
          const badBad = new Set([false, null, 0, "", undefined, NaN])
@@ -140,14 +140,14 @@ z=y(ele,z,coll)
      }
    },
 	keys: function(obj){
-	newArray=[];
+	let newArray=[];
 	for(const key in obj){
 	newArray.push(key)
 	}
 	return newArray;
 	},
 	values: function(obj){
-	newArray=[];
+	let newArray=[];
 	for(const val in obj){
 	newArray.push(obj[val])
 	}
@@ -155,7 +155,7 @@ z=y(ele,z,coll)
 	},
 
     functions: function(obj) {
-    newArray=[];
+    let newArray=[];
 	for(const key in obj){
 	if (typeof obj[key] === "function")
 	newArray.push(key)
