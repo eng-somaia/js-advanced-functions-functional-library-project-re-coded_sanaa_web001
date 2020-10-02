@@ -4,97 +4,77 @@ const fi = (function() {
       return 'Start by reading https://medium.com/javascript-scene/master-the-javascript-interview-what-is-functional-programming-7f218c68b3a0'
     },
 
-    each: function(a,b) {
-      if (Array.isArray(a)){
-        for (const ele of a){
-          b.call(this, ele)
-        }
-      }
-      else{
-        for (const prop in a){
-          b.call(this, a[prop])
-        }
-      }
-  return a;
+    each: function() {
+
     },
 
-    map: function(a,b) {
-      let result =[];
-      if (Array.isArray(a)){
-        for (const ele of a){
-          result.push(b.call(this, ele))
-        }
-      }
-      else {
-        for (const prop in a){
-          result.push(b.call(this, a[prop],prop))
-        }
-      }
-  return result;
+    map: function() {
+
     },
 
-    reduce: function(c = [], callback = () => {}, acc) {
-  			let collection = c.slice(0)
+    reduce: function(x=[],y=()=>{},z) {
+        coll = x;
+if(!z){
+z=coll[0];
+coll=coll.slice(1);
+}
+for( const ele of coll)
+{
+z=y(ele,z,coll)
+}
+ return z;
 
-  			if (!acc) {
-  				acc = collection[0]
-  				collection = collection.slice(1)
-  			}
-
-  			let len = collection.length;
-
-  			for (let i = 0; i < len; i++) {
-  				acc = callback(acc, collection[i], collection)
-  			}
-  			return acc;
     },
-    find: function(collection, predicate) {
-     if (!(collection instanceof Array))
-       collection = Object.values(collection)
+   find: function(x=[],y=()=>{}){
+	if(!(x instanceof Array))
+	x=Object.values(x);
 
-     for (let idx = 0; idx < collection.length; idx++)
-       if (predicate(collection[idx])) return collection[idx]
+     for (const ele of x)
+      if (y(ele))
+      return ele;
+    return undefined;
 
-     return undefined
-   },
+ },
+	filter: function(col,cb){
+		if(!(col instanceof Array))
+	      col=Object.values(col);
 
-   filter: function(collection, predicate) {
-     if (!(collection instanceof Array))
-       collection = Object.values(collection)
+		let result = [];
+		for (const ele of col){
+      		if (cb(ele))
+		result.push(ele)
+		}
+	return result;
+	},
+	size: function(col){
 
-     const newArr = []
-
-     for (let idx = 0; idx < collection.length; idx++)
-       if (predicate(collection[idx])) newArr.push(collection[idx])
-
-     return newArr
-   },
-
-   size: function(collection) {
-     return (collection instanceof Array) ? collection.length : Object.keys(collection).length
-   },
-
-   first: function(collection, stop=false) {
-     return (stop) ? collection.slice(0, stop) : collection[0]
-   },
-
-   last: function(collection, start=false) {
-     return (start) ? collection.slice(collection.length-start, collection.length) : collection[collection.length-1]
-   },
-
-   compact: function(collection) {
-     const badBad = new Set([false, null, 0, "", undefined, NaN])
-     return collection.filter(el => !badBad.has(el))
-   },
-
-   sortBy: function(collection, callback) {
+	if(!(col instanceof Array))
+	      col=Object.keys(col);
+	return col.length;
+	},
+	first: function(col,n=0){
+         if(n===0)
+	return col[0]
+	else
+	return col.slice(0,n)
+	},
+	last: function(col,n=0){
+         if(n===0)
+	return col[col.length-1]
+	else
+	return col.slice(n, col.length-1)
+	},
+	compact: function(col){
+         const badBad = new Set([false, null, 0, "", undefined, NaN])
+     return col.filter(el => !badBad.has(el))
+	},
+	sortBy: function(collection, callback) {
      const newArr = [...collection]
      return newArr.sort(function(a, b) {
        return callback(a) - callback(b)
      })
-   },
-
-   unpack: function(receiver, arr) {
+	}, 
+	 unpack: function(receiver, arr) {
      for (let val of arr)
        receiver.push(val)
    },
@@ -111,8 +91,7 @@ const fi = (function() {
      }
      return newArr
    },
-
-   uniqSorted: function(collection, iteratee) {
+	uniqSorted: function(collection, iteratee) {
      const sorted = [collection[0]]
      for (let idx = 1; idx < collection.length; idx++) {
        if (sorted[idx-1] !== collection[idx])
@@ -139,38 +118,30 @@ const fi = (function() {
        return Array.from(uniqVals)
      }
    },
+	keys: function(obj){
+	newArray=[];
+	for(const key in obj){
+	newArray.push(key)
+	}
+	return newArray;
+	},
+	values: function(obj){
+	newArray=[];
+	for(const val in obj){
+	newArray.push(obj[val])
+	}
+	return newArray;
+	},
 
-   keys: function(obj) {
-
-     const keys = []
-     for (let key in obj){
-       keys.push(key)
-     }
-     return keys
-   },
-
-   values: function(obj) {
-
-     const values = []
-     for (let key in obj){
-       values.push(obj[key])
-     }
-     return values
-   },
-
-   functions: function(obj) {
-     const functionNames = []
-
-     for (let key in obj) {
-       if (typeof obj[key] === "function"){
-         functionNames.push(key)
-       }
-     }
-
-     return functionNames.sort()
-   },
-
- }
+    functions: function(obj) {
+    newArray=[];
+	for(const key in obj){
+	if (typeof obj[key] === "function")
+	newArray.push(key)
+	}
+	return newArray;
+    },
+  }
 })()
 
 fi.libraryMethod()
